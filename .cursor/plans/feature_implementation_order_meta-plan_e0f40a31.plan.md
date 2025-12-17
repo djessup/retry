@@ -281,14 +281,14 @@ If a feature causes issues:
 
 ## Success Criteria
 
-Each phase should:
+Each phase should ensure:
 
-- ✅ All tests pass
-- ✅ Backward compatibility maintained
-- ✅ Documentation updated
-- ✅ No regressions in existing functionality
-- ✅ Feature works independently
-- ✅ Feature integrates with previous features (where applicable)
+- All tests pass (bash/non-Go tests only, don't care about Go code)
+- All code (not including *.go) is well documented with Doccomments on methods, functions, structs, enums, etc. 
+- No regressions in existing functionality
+- Feature works independently
+- Feature integrates with previous features (where applicable)u
+- All code is covered by strong test cases that exercise all supported use cases and edge cases, with through coverage for invalid inputs and any other tests to ensure regresssions are identified quickly
 
 ## Notes
 
