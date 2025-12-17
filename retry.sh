@@ -316,6 +316,10 @@ main() {
       successes=$((successes + 1))
       multiplier=1
       if [[ $successes -ge $required_consecutive ]]; then
+        if [[ $total_time != 0 ]] && compare_gt "$(elapsed "$start")" "$total_time"; then
+          error "maximum time exceeded"
+          exit 1
+        fi
         exit 0
       fi
     else
