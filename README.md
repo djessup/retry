@@ -31,6 +31,19 @@ Requires that you already have a functional Go toolchain installed.
 go install github.com/joshdk/retry@master
 ```
 
+## Bash port
+
+If you prefer to avoid installing Go, this repository also ships with a Bash implementation that mirrors the CLI surface of the Go binary:
+
+```bash
+./retry.sh -attempts=5 -sleep=2s curl https://example.com/health
+```
+
+Notes:
+
+- `-task-time` requires the `timeout` command. If `timeout` is missing, the script will warn and run without per-attempt limits.
+- HTTP checks rely on `curl`. If `curl` is unavailable, the script emits a warning and exits.
+
 ## Motivations
 
 I kept seeing folks write bespoke code to retry commands that were either flaky, or took time to succeed. This usually manifested as some sort of loop in bash, with a counter, and a return code check.
@@ -188,6 +201,11 @@ Lastly, the `-quiet` flag silences all output (STDOUT and STDERR) from the comma
 > ```bash
 > $ retry -attempts=10 -task-time=15s -max-time=2m -delay=15s -sleep=5s -backoff -consecutive=3 wget https://example.com
 >```
+
+## Tests
+
+- Go code: `go test ./...`
+- Bash script: `bats test/retry.bats`
 
 ## License
 
