@@ -2,11 +2,9 @@ name: GolangCI-Lint
 on:
   workflow_dispatch:
   pull_request:
-    branches:
-      - '**/golang-**'
-  # push:
-  #   branches:
-  #     - "master"
+    paths: ['**.go']
+  push:
+    paths: ['**.go']
 
 jobs:
   lint:
