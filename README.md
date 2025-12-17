@@ -8,28 +8,24 @@
 
 ⏰ Rerun a command until it eventually succeeds, or doesn't!
 
+**Note:** This repository provides a Bash port of the `retry` CLI. For the original Go implementation (and prebuilt release binaries), use the upstream project at [joshdk/retry](https://github.com/joshdk/retry).
+
 ## Installation
 
-Prebuilt binaries for several architectures can be found attached to any of the available [releases][github-release-link].
+This fork focuses on the Bash port. To install or build the original Go binary, follow the instructions in the upstream repository: [joshdk/retry](https://github.com/joshdk/retry).
 
-For Linux:
-```shell
-wget https://github.com/joshdk/retry/releases/download/v1.4.0/retry-linux-amd64.tar.gz
-tar -xf retry-linux-amd64.tar.gz
-sudo install retry /usr/bin/retry
+### Bash port
+
+Run the Bash port directly from this repository:
+
+```bash
+./retry.sh -attempts=5 -sleep=2s curl https://example.com/health
 ```
 
-For Mac:
-```shell
-brew tap joshdk/tap
-brew install joshdk/tap/retry
-```
+Notes:
 
-A development version can also be built directly from this repository.
-Requires that you already have a functional Go toolchain installed.
-```shell
-go install github.com/joshdk/retry@master
-```
+- `-task-time` requires the `timeout` command. If `timeout` is missing, the script will warn and run without per-attempt limits.
+- HTTP checks rely on `curl`. If `curl` is unavailable, the script emits a warning and exits.
 
 ## Motivations
 
@@ -188,6 +184,11 @@ Lastly, the `-quiet` flag silences all output (STDOUT and STDERR) from the comma
 > ```bash
 > $ retry -attempts=10 -task-time=15s -max-time=2m -delay=15s -sleep=5s -backoff -consecutive=3 wget https://example.com
 >```
+
+## Tests
+
+- Go code: `go test ./...`
+- Bash script: `bats test/retry.bats`
 
 ## License
 
