@@ -1,20 +1,28 @@
 [![Actions][github-actions-badge]][github-actions-link]
 [![License][license-badge]][license-link]
-[![Go Report Card][go-report-card-badge]][go-report-card-link]
-[![Godoc][godoc-badge]][godoc-link]
 [![Releases][github-release-badge]][github-release-link]
 
-# Retry
+# Retry.sh
 
-⏰ Rerun a command until it eventually succeeds, or doesn't!
+A port of [`retry`][retry-upstream-link] from Golang to straight Bash.
 
-**Note:** This repository provides a Bash port of the `retry` CLI. For the original Go implementation (and prebuilt release binaries), use the upstream project at [joshdk/retry](https://github.com/joshdk/retry).
+> ⏰ Rerun a command until it eventually succeeds, or doesn't!
 
-## Installation
+> [!IMPORTANT] Looking for the original Golang `retry` CLI? 🦫
+> This repository provides a _Bash_ port of the `retry` CLI, originally written in Go.
+> 
+> Most users will have a better experience using the original/upstream version written in Go - it'll be faster, easier to install and update, and better support.
+>
+> The Golang version is available at 👉 [joshdk/retry][retry-upstream-link], including pre-built binaries.
+>
+> If you really need a Bash port, however, read on.
+>
 
-This fork focuses on the Bash port. To install or build the original Go binary, follow the instructions in the upstream repository: [joshdk/retry](https://github.com/joshdk/retry).
+##  🔥
 
-### Bash port
+This fork focuses on the Bash port. 
+
+### Install
 
 Run the Bash port directly from this repository:
 
@@ -22,10 +30,30 @@ Run the Bash port directly from this repository:
 ./retry.sh -attempts=5 -sleep=2s curl https://example.com/health
 ```
 
-Notes:
+3rd-party dependencies:
 
-- `-task-time` requires the `timeout` command. If `timeout` is missing, the script will warn and run without per-attempt limits.
+- `-task-time` requires the `timeout` command. If `timeout` is missing, the script emit a warning and run without per-attempt limits.
 - HTTP checks rely on `curl`. If `curl` is unavailable, the script emits a warning and exits.
+
+### Testing
+
+```bash
+bats test/retry.bats
+```
+
+### Linting
+
+```bash
+shellcheck retry.sh
+```
+
+---
+
+## Retry (Golang)
+> [!WARNING] Legacy content warning 🏚️
+> The content below is from the original Go version. It's kept here for reference purposes and may not be accurate or applicable to the Bash port.
+
+⏰ Rerun a command until it eventually succeeds, or doesn't!
 
 ## Motivations
 
@@ -188,20 +216,16 @@ Lastly, the `-quiet` flag silences all output (STDOUT and STDERR) from the comma
 ## Tests
 
 - Go code: `go test ./...`
-- Bash script: `bats test/retry.bats`
 
 ## License
 
-This code is distributed under the [MIT License][license-link], see [LICENSE.txt][license-file] for more information.
+This code is distributed under the [MIT License][license-link], see [LICENSE.txt][license-file], same as `joshdk/retry` (IANAL I don't know if this is legally required 🤷, but regardless it feels like the right thing to do).
 
-[github-actions-badge]:  https://github.com/joshdk/retry/workflows/build/badge.svg
-[github-actions-link]:   https://github.com/joshdk/retry/actions
-[github-release-badge]:  https://img.shields.io/github/release/joshdk/retry/all.svg
-[github-release-link]:   https://github.com/joshdk/retry/releases
-[go-report-card-badge]:  https://goreportcard.com/badge/github.com/joshdk/retry
-[go-report-card-link]:   https://goreportcard.com/report/github.com/joshdk/retry
-[godoc-badge]:           https://pkg.go.dev/badge/github.com/joshdk/retry/retry
-[godoc-link]:            https://pkg.go.dev/github.com/joshdk/retry/retry
+[github-actions-badge]:  https://github.com/djessup/retry/workflows/build/badge.svg
+[github-actions-link]:   https://github.com/djessup/retry/actions
+[retry-upstream-link]:   https://github.com/joshdk/retry
+[github-release-badge]:  https://img.shields.io/github/release/djessup/retry/all.svg
+[github-release-link]:   https://github.com/djessup/retry/releases
 [license-badge]:         https://img.shields.io/badge/license-MIT-green.svg
-[license-file]:          https://github.com/joshdk/retry/blob/master/LICENSE.txt
+[license-file]:          https://github.com/djessup/retry/blob/master/LICENSE.txt
 [license-link]:          https://opensource.org/licenses/MIT
